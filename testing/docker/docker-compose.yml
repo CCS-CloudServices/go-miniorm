@@ -1,0 +1,34 @@
+version: '3.7'
+x-logging:
+  &gbs-logging
+  driver: gelf
+  options:
+    gelf-address: udp://${GBS_GELF_IP}:${GBS_GELF_PORT}
+
+services:
+  mysql:
+    image: "artifactory.corp.acronis.com/global-docker-prod-local-mirror/percona:5.6"
+    command: >
+      --character-set-server=utf8
+      --collation-server=utf8_unicode_ci
+    logging: *gbs-logging
+
+  postgres:
+    image: "artifactory.corp.acronis.com/global-docker-prod-local-mirror/postgres:11-alpine"
+    logging: *gbs-logging
+
+  mssql:
+    image: "artifactory.corp.acronis.com/global-docker-prod-virtual/mcr.microsoft.com/mssql/server:2017-GDR3"
+    logging: *gbs-logging
+
+  integration-tests:
+    image: "${DOCKER_BUILD_IMAGE}"
+    environment:
+      ATP_DATA_CLASSIFICATION_DB_MYSQL_HOST: mysql
+      ATP_DATA_CLASSIFICATION_DB_POSTGRES_HOST: postgres
+      ATP_DATA_CLASSIFICATION_DB_MSSQL_HOST: mssql
+    logging: *gbs-logging
+    depends_on:
+      - mysql
+      - postgres
+      - mssql

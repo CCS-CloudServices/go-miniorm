@@ -1,0 +1,11 @@
+get_id_entries:
+  - id: 100
+    string_col: "original value 1"
+    on_create_count: 1
+    on_update_count: 0
+get_unique_entries:
+  - id_1: 1
+    id_2: 2
+    string_col: "original value 1"
+    on_create_count: 1
+    on_update_count: 0

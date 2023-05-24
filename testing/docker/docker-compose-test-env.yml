@@ -1,0 +1,38 @@
+version: '3.7'
+
+x-logging:
+  &no-logging
+  driver: local
+
+services:
+  mysql:
+    logging: *no-logging
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: user
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test
+
+  postgres:
+    logging: *no-logging
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test
+
+  mssql:
+    logging: *no-logging
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Acronis123
+      MSSQL_DB: test
+      MSSQL_USER: user
+      MSSQL_PASSWORD: password
+
+  integration-tests:
+    logging: *no-logging
