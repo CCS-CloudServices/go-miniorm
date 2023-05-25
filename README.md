@@ -325,8 +325,10 @@ txErr := orm.WithTx(func(o ORM) error {
 #### `Query()`
 
 ```golang
+entryList := make([]*Entry, 0)
 err := orm.Query(context.Background(), miniorm.QueryParams{
-    TableName:  "entry",
+    TableName: "entry",
+    EntryList: &entryList,
     Expression: goqu.Ex{},
     OrderBy: []exp.OrderedExpression{
         goqu.C("create_time").Desc(),
@@ -339,9 +341,11 @@ err := orm.Query(context.Background(), miniorm.QueryParams{
 #### `QueryWithXLock()`
 
 ```golang
+entryList := make([]*Entry, 0)
 txErr := orm.WithTx(func (o ORM) error {
     return orm.QueryWithXLock(context.Background(), miniorm.QueryParams{
-        TableName:  "entry",
+        TableName: "entry",
+        EntryList: &entryList,
         Expression: goqu.Ex{},
         OrderBy: []exp.OrderedExpression{
             goqu.C("create_time").Desc(),
