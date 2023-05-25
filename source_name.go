@@ -15,6 +15,7 @@ func newMSSQLSourceNameProvider() sourceNameProvider {
 	return &mssqlSourceNameProvider{}
 }
 
+//nolint:dupl // Source name logic has many similarity between different database engines
 func (*mssqlSourceNameProvider) GetSourceName(databaseConfig DatabaseConfig) (string, error) {
 	if databaseConfig.Host == "" {
 		return "", errors.New("host is not provided")
@@ -52,6 +53,7 @@ func newMySQLSourceNameProvider() sourceNameProvider {
 	return &mysqlSourceNameProvider{}
 }
 
+//nolint:dupl // Source name logic has many similarity between different database engines
 func (*mysqlSourceNameProvider) GetSourceName(databaseConfig DatabaseConfig) (string, error) {
 	if databaseConfig.User == "" {
 		return "", errors.New("user is not provided")

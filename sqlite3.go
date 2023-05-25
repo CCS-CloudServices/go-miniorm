@@ -254,6 +254,7 @@ func (orm *SQLite3ORM) GetDBWrapper() DBWrapper {
 	return orm.db
 }
 
+//nolint:gosec // Random sleep time does not need to be too secure
 func (orm *SQLite3ORM) getRandomTxRetrySleepTime() time.Duration {
 	sleepTimeInMillisecond := orm.databaseConfig.SQLite3TransactionRetryDelayInMillisecond -
 		orm.databaseConfig.SQLite3TransactionRetryJitterInMillisecond +
@@ -304,9 +305,9 @@ func (orm *SQLite3ORM) WithTx(executeFunc func(ORM) error) error {
 	if nonTXDB, ok := orm.db.(*goqu.Database); ok {
 		if orm.databaseConfig.SQLite3TransactionMode == SQLite3TransactionModeRetry {
 			return orm.withTxRetry(nonTXDB, executeFunc)
-		} else {
-			return orm.withTxMutex(nonTXDB, executeFunc)
 		}
+
+		return orm.withTxMutex(nonTXDB, executeFunc)
 	}
 
 	return executeFunc(orm)

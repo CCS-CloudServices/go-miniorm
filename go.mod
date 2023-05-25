@@ -1,4 +1,4 @@
-module git.acronis.work/libs/go-miniorm
+module git.acronis.com/libs/go-miniorm
 
 go 1.14
 

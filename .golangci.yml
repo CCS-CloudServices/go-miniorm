@@ -26,7 +26,7 @@ linters-settings:
   lll:
     line-length: 140
   goimports:
-    local-prefixes: git.acronis.work/libs/go-miniorm/
+    local-prefixes: git.acronis.com/libs/go-miniorm/
   gocritic:
     enabled-tags:
       - diagnostic
