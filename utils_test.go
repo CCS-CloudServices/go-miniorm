@@ -261,7 +261,7 @@ func testGetWithXLock(t *testing.T, orm ORM) {
 func testQuery(t *testing.T, orm ORM) {
 	testCases := []struct {
 		Params            QueryParams
-		ExpectedEntryList []*getIDEntryWithOnCreateAndOnUpdate
+		ExpectedEntryList []getIDEntryWithOnCreateAndOnUpdate
 		MatchOrder        bool
 	}{
 		{
@@ -269,7 +269,7 @@ func testQuery(t *testing.T, orm ORM) {
 				TableName:  getIDEntryTableName,
 				Expression: goqu.Ex{},
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: 0},
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
@@ -285,7 +285,7 @@ func testQuery(t *testing.T, orm ORM) {
 					goqu.C(getIDEntryOnCreateCountColumnName).Lt(10),
 				),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: 0},
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
@@ -299,7 +299,7 @@ func testQuery(t *testing.T, orm ORM) {
 					goqu.C(getIDEntryOnCreateCountColumnName).Gte(10),
 				),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: 0},
 				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: 0},
 			},
@@ -314,7 +314,7 @@ func testQuery(t *testing.T, orm ORM) {
 					goqu.C(getIDEntryIDColumnName).Desc(),
 				},
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: 0},
 				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: 0},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
@@ -333,7 +333,7 @@ func testQuery(t *testing.T, orm ORM) {
 				},
 				Offset: proto.Uint32(3),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
 				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: 0},
 			},
@@ -349,7 +349,7 @@ func testQuery(t *testing.T, orm ORM) {
 				},
 				Limit: proto.Uint32(3),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: 0},
 				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: 0},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
@@ -367,7 +367,7 @@ func testQuery(t *testing.T, orm ORM) {
 				Offset: proto.Uint32(3),
 				Limit:  proto.Uint32(1),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
 			},
 			MatchOrder: true,
@@ -376,7 +376,7 @@ func testQuery(t *testing.T, orm ORM) {
 
 	for _, testCase := range testCases {
 		params := testCase.Params
-		entryList := make([]*getIDEntryWithOnCreateAndOnUpdate, 0)
+		entryList := make([]getIDEntryWithOnCreateAndOnUpdate, 0)
 		params.EntryList = &entryList
 		err := orm.Query(context.Background(), params)
 		assert.Nil(t, err)
@@ -394,7 +394,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 
 	testCases := []struct {
 		Params            QueryParams
-		ExpectedEntryList []*getIDEntryWithOnCreateAndOnUpdate
+		ExpectedEntryList []getIDEntryWithOnCreateAndOnUpdate
 		MatchOrder        bool
 	}{
 		{
@@ -402,7 +402,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				TableName:  getIDEntryTableName,
 				Expression: goqu.Ex{},
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: updateCount},
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount},
@@ -418,7 +418,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 					goqu.C(getIDEntryOnCreateCountColumnName).Lt(10),
 				),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: updateCount * 2},
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount * 2},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount * 2},
@@ -432,7 +432,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 					goqu.C(getIDEntryOnCreateCountColumnName).Gte(10),
 				),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: updateCount * 2},
 				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: updateCount * 2},
 			},
@@ -447,7 +447,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 					goqu.C(getIDEntryIDColumnName).Desc(),
 				},
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: updateCount * 3},
 				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: updateCount * 3},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount * 3},
@@ -466,7 +466,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				},
 				Offset: proto.Uint32(3),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount * 4},
 				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: updateCount * 4},
 			},
@@ -482,7 +482,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				},
 				Limit: proto.Uint32(3),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: updateCount * 4},
 				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: updateCount * 4},
 				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount * 4},
@@ -500,7 +500,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				Offset: proto.Uint32(3),
 				Limit:  proto.Uint32(1),
 			},
-			ExpectedEntryList: []*getIDEntryWithOnCreateAndOnUpdate{
+			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
 				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount * 5},
 			},
 			MatchOrder: true,
@@ -511,7 +511,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 		waitGroup := sync.WaitGroup{}
 		for i := 0; i < int(updateCount); i++ {
 			params := testCase.Params
-			entryList := make([]*getIDEntryWithOnCreateAndOnUpdate, 0)
+			entryList := make([]getIDEntryWithOnCreateAndOnUpdate, 0)
 			params.EntryList = &entryList
 
 			waitGroup.Add(1)
@@ -522,7 +522,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 					}
 
 					for _, entry := range entryList {
-						if err := o.Update(context.Background(), entry); err != nil {
+						if err := o.Update(context.Background(), &entry); err != nil {
 							return err
 						}
 					}
@@ -536,7 +536,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 		waitGroup.Wait()
 
 		params := testCase.Params
-		entryList := make([]*getIDEntryWithOnCreateAndOnUpdate, 0)
+		entryList := make([]getIDEntryWithOnCreateAndOnUpdate, 0)
 		params.EntryList = &entryList
 		err := orm.Query(context.Background(), params)
 		assert.Nil(t, err)

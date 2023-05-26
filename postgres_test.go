@@ -64,7 +64,7 @@ func preparePostgresTestEntryTable(fixtureFile string) error {
 }
 
 func TestPostgresCreate(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_create.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_create.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -74,7 +74,7 @@ func TestPostgresCreate(t *testing.T) {
 }
 
 func TestPostgresGet(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_get.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -84,7 +84,7 @@ func TestPostgresGet(t *testing.T) {
 }
 
 func TestPostgresGetWithXLock(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_get.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -94,7 +94,7 @@ func TestPostgresGetWithXLock(t *testing.T) {
 }
 
 func TestPostgresQuery(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_query.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -104,7 +104,7 @@ func TestPostgresQuery(t *testing.T) {
 }
 
 func TestPostgresQueryWithXLock(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_query.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -114,7 +114,7 @@ func TestPostgresQueryWithXLock(t *testing.T) {
 }
 
 func TestPostgresCount(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_query.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -124,7 +124,7 @@ func TestPostgresCount(t *testing.T) {
 }
 
 func TestPostgresCreateOrUpdate(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_create_or_update.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_create_or_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -134,7 +134,7 @@ func TestPostgresCreateOrUpdate(t *testing.T) {
 }
 
 func TestPostgresUpdate(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_update.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -144,7 +144,7 @@ func TestPostgresUpdate(t *testing.T) {
 }
 
 func TestPostgresDelete(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_delete.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_delete.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)
@@ -161,7 +161,7 @@ func TestPostgreSQLGetDBWrapper(t *testing.T) {
 }
 
 func TestPostgreSQLWithTX(t *testing.T) {
-	err := preparePostgresTestEntryTable("fixtures/test_get.yml")
+	err := preparePostgresTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(postgresTestConfig)

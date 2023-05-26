@@ -62,7 +62,7 @@ func prepareMySQLTestEntryTable(fixtureFile string) error {
 }
 
 func TestMySQLCreate(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_create.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_create.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -73,7 +73,7 @@ func TestMySQLCreate(t *testing.T) {
 }
 
 func TestMySQLGet(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_get.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -83,7 +83,7 @@ func TestMySQLGet(t *testing.T) {
 }
 
 func TestMySQLGetWithXLock(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_get.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -93,7 +93,7 @@ func TestMySQLGetWithXLock(t *testing.T) {
 }
 
 func TestMySQLQuery(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_query.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -103,7 +103,7 @@ func TestMySQLQuery(t *testing.T) {
 }
 
 func TestMySQLQueryWithXLock(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_query.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -113,7 +113,7 @@ func TestMySQLQueryWithXLock(t *testing.T) {
 }
 
 func TestMySQLCount(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_query.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -123,7 +123,7 @@ func TestMySQLCount(t *testing.T) {
 }
 
 func TestMySQLCreateOrUpdate(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_create_or_update.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_create_or_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -134,7 +134,7 @@ func TestMySQLCreateOrUpdate(t *testing.T) {
 }
 
 func TestMySQLUpdate(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_update.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -144,7 +144,7 @@ func TestMySQLUpdate(t *testing.T) {
 }
 
 func TestMySQLDelete(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_delete.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_delete.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)
@@ -161,7 +161,7 @@ func TestMySQLGetDBWrapper(t *testing.T) {
 }
 
 func TestMySQLWithTX(t *testing.T) {
-	err := prepareMySQLTestEntryTable("fixtures/test_get.yml")
+	err := prepareMySQLTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mysqlTestConfig)

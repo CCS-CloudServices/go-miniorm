@@ -69,7 +69,7 @@ func prepareSQLite3TestEntryTable(fixtureFile string) error {
 }
 
 func TestSQLite3CreateRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_create.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_create.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -79,7 +79,7 @@ func TestSQLite3CreateRetry(t *testing.T) {
 }
 
 func TestSQLite3GetRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_get.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -89,7 +89,7 @@ func TestSQLite3GetRetry(t *testing.T) {
 }
 
 func TestSQLite3GetWithXLockRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_get.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -99,7 +99,7 @@ func TestSQLite3GetWithXLockRetry(t *testing.T) {
 }
 
 func TestSQLite3QueryRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_query.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -109,7 +109,7 @@ func TestSQLite3QueryRetry(t *testing.T) {
 }
 
 func TestSQLite3QueryWithXLockRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_query.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -119,7 +119,7 @@ func TestSQLite3QueryWithXLockRetry(t *testing.T) {
 }
 
 func TestSQLite3CountRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_query.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -129,7 +129,7 @@ func TestSQLite3CountRetry(t *testing.T) {
 }
 
 func TestSQLite3CreateOrUpdateRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_create_or_update.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_create_or_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -140,7 +140,7 @@ func TestSQLite3CreateOrUpdateRetry(t *testing.T) {
 }
 
 func TestSQLite3UpdateRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_update.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -150,7 +150,7 @@ func TestSQLite3UpdateRetry(t *testing.T) {
 }
 
 func TestSQLite3DeleteRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_delete.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_delete.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -167,7 +167,7 @@ func TestSQLite3GetDBWrapperRetry(t *testing.T) {
 }
 
 func TestSQLite3WithTXRetry(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_get.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigRetry)
@@ -177,7 +177,7 @@ func TestSQLite3WithTXRetry(t *testing.T) {
 }
 
 func TestSQLite3CreateMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_create.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_create.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -187,7 +187,7 @@ func TestSQLite3CreateMutex(t *testing.T) {
 }
 
 func TestSQLite3GetMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_get.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -197,7 +197,7 @@ func TestSQLite3GetMutex(t *testing.T) {
 }
 
 func TestSQLite3GetWithXLockMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_get.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -207,7 +207,7 @@ func TestSQLite3GetWithXLockMutex(t *testing.T) {
 }
 
 func TestSQLite3QueryMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_query.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -217,7 +217,7 @@ func TestSQLite3QueryMutex(t *testing.T) {
 }
 
 func TestSQLite3QueryWithXLockMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_query.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -227,7 +227,7 @@ func TestSQLite3QueryWithXLockMutex(t *testing.T) {
 }
 
 func TestSQLite3CountMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_query.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -237,7 +237,7 @@ func TestSQLite3CountMutex(t *testing.T) {
 }
 
 func TestSQLite3CreateOrUpdateMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_create_or_update.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_create_or_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -248,7 +248,7 @@ func TestSQLite3CreateOrUpdateMutex(t *testing.T) {
 }
 
 func TestSQLite3UpdateMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_update.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -258,7 +258,7 @@ func TestSQLite3UpdateMutex(t *testing.T) {
 }
 
 func TestSQLite3DeleteMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_delete.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_delete.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)
@@ -275,7 +275,7 @@ func TestSQLite3GetDBWrapperMutex(t *testing.T) {
 }
 
 func TestSQLite3WithTXMutex(t *testing.T) {
-	err := prepareSQLite3TestEntryTable("fixtures/test_get.yml")
+	err := prepareSQLite3TestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(sqlite3TestConfigMutex)

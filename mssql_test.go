@@ -66,7 +66,7 @@ func prepareMSSQLTestEntryTable(fixtureFile string) error {
 }
 
 func TestMSSQLCreate(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_create.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_create.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -76,7 +76,7 @@ func TestMSSQLCreate(t *testing.T) {
 }
 
 func TestMSSQLGet(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_get.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -86,7 +86,7 @@ func TestMSSQLGet(t *testing.T) {
 }
 
 func TestMSSQLGetWithXLock(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_get.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -96,7 +96,7 @@ func TestMSSQLGetWithXLock(t *testing.T) {
 }
 
 func TestMssqlQuery(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_query.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -106,7 +106,7 @@ func TestMssqlQuery(t *testing.T) {
 }
 
 func TestMssqlQueryWithXLock(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_query.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -116,7 +116,7 @@ func TestMssqlQueryWithXLock(t *testing.T) {
 }
 
 func TestMssqlCount(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_query.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_query.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -126,7 +126,7 @@ func TestMssqlCount(t *testing.T) {
 }
 
 func TestMSSQLCreateOrUpdate(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_create_or_update.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_create_or_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -137,7 +137,7 @@ func TestMSSQLCreateOrUpdate(t *testing.T) {
 }
 
 func TestMSSQLUpdate(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_update.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_update.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -147,7 +147,7 @@ func TestMSSQLUpdate(t *testing.T) {
 }
 
 func TestMSSQLDelete(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_delete.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_delete.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
@@ -164,7 +164,7 @@ func TestMSSQLGetDBWrapper(t *testing.T) {
 }
 
 func TestMSSQLWithTX(t *testing.T) {
-	err := prepareMSSQLTestEntryTable("fixtures/test_get.yml")
+	err := prepareMSSQLTestEntryTable("testing/fixtures/test_get.yml")
 	assert.Nil(t, err)
 
 	orm, err := NewORM(mssqlTestConfig)
