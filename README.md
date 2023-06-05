@@ -64,7 +64,7 @@ Go 1.14 or above.
 ### Installation
 
 ```bash
-go get git.acronis.com/libs/go-miniorm
+go get github.com/CCS-CloudServices/go-miniorm
 ```
 
 ## Usage

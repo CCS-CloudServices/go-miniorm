@@ -1,4 +1,4 @@
-module git.acronis.com/libs/go-miniorm
+module github.com/CCS-CloudServices/go-miniorm
 
 go 1.14
 
