@@ -40,6 +40,7 @@ func (orm *MySQLORM) Create(ctx context.Context, entry interface{}) error {
 
 	result, err := orm.GetDBWrapper().
 		Insert(entryTableName).
+		Prepared(true).
 		Rows(entry).
 		Executor().
 		ExecContext(ctx)
@@ -88,13 +89,13 @@ func (orm *MySQLORM) CreateOrUpdate(ctx context.Context, entry interface{}) erro
 
 		defer rows.Close()
 
-		if !rows.Next() {
-			return txORM.Create(ctx, entry)
+		rowExists := rows.Next()
+		if err := rows.Close(); err != nil {
+			return err
 		}
 
-		err = rows.Close()
-		if err != nil {
-			return err
+		if !rowExists {
+			return txORM.Create(ctx, entry)
 		}
 
 		return txORM.Update(ctx, entry)
@@ -256,6 +257,7 @@ func (orm *MySQLORM) Update(ctx context.Context, entry interface{}) error {
 
 	result, err := orm.db.
 		Update(entryTableName).
+		Prepared(true).
 		Where(selectEntryUniqueExpression).
 		Set(entry).
 		Executor().

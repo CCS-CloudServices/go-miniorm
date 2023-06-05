@@ -25,7 +25,7 @@ var (
 )
 
 func prepareSQLite3TestEntryTable(fixtureFile string) error {
-	db, err := newSQLXDatabase(sqlite3TestConfigMutex)
+	db, err := newSQLDatabase(sqlite3TestConfigMutex)
 	if err != nil {
 		return err
 	}
@@ -37,6 +37,7 @@ func prepareSQLite3TestEntryTable(fixtureFile string) error {
 		CREATE TABLE get_id_entries (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			string_col TEXT NOT NULL,
+			bytes_col BYTEA NOT NULL,
 			on_create_count INTEGER NOT NULL,
 			on_update_count INTEGER NOT NULL
 		);
@@ -46,6 +47,7 @@ func prepareSQLite3TestEntryTable(fixtureFile string) error {
 			id_1 INTEGER,
 			id_2 INTEGER,
 			string_col TEXT NOT NULL,
+			bytes_col BYTEA NOT NULL,
 			on_create_count INTEGER NOT NULL,
 			on_update_count INTEGER NOT NULL,
 			PRIMARY KEY (id_1, id_2)
@@ -57,7 +59,7 @@ func prepareSQLite3TestEntryTable(fixtureFile string) error {
 	}
 
 	fixtures, err := testfixtures.New(
-		testfixtures.Database(db.DB),
+		testfixtures.Database(db),
 		testfixtures.Dialect(string(DriverTypeSQLite3)),
 		testfixtures.FilesMultiTables(fixtureFile),
 	)

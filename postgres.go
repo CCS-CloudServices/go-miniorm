@@ -37,7 +37,7 @@ func (orm *PostgresORM) Create(ctx context.Context, entry interface{}) error {
 		return err
 	}
 
-	insertDataset := orm.GetDBWrapper().Insert(entryTableName).Rows(entry)
+	insertDataset := orm.GetDBWrapper().Insert(entryTableName).Prepared(true).Rows(entry)
 
 	var (
 		idColumn string
@@ -105,7 +105,12 @@ func (orm *PostgresORM) CreateOrUpdate(ctx context.Context, entry interface{}) e
 
 		defer rows.Close()
 
-		if !rows.Next() {
+		rowExists := rows.Next()
+		if err := rows.Close(); err != nil {
+			return err
+		}
+
+		if !rowExists {
 			return txORM.Create(ctx, entry)
 		}
 
@@ -264,6 +269,7 @@ func (orm *PostgresORM) Update(ctx context.Context, entry interface{}) error {
 
 	result, err := orm.db.
 		Update(entryTableName).
+		Prepared(true).
 		Where(selectEntryUniqueExpression).
 		Set(entry).
 		Executor().

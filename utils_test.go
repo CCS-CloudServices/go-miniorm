@@ -21,60 +21,70 @@ func testCreate(t *testing.T, orm ORM, sequenceStart int64) {
 
 	getIDEntry1 := &getIDEntryWithOnCreateAndOnUpdate{
 		StringCol: "value 1",
+		BytesCol:  ([]byte)("bytes value 1"),
 	}
 	err = orm.Create(context.Background(), getIDEntry1)
 	assert.Nil(t, err)
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            sequenceStart + 1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getIDEntry1)
 
 	getIDEntry2 := &getIDEntryWithOnCreateAndOnUpdate{
 		StringCol: "value 2",
+		BytesCol:  ([]byte)("bytes value 2"),
 	}
 	err = orm.Create(context.Background(), getIDEntry2)
 	assert.Nil(t, err)
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            sequenceStart + 2,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getIDEntry2)
 
 	getIDEntry3 := &getIDEntry{
 		StringCol: "value 3",
+		BytesCol:  ([]byte)("bytes value 3"),
 	}
 	err = orm.Create(context.Background(), getIDEntry3)
 	assert.Nil(t, err)
 	assert.Equal(t, &getIDEntry{
 		ID:            sequenceStart + 3,
 		StringCol:     "value 3",
+		BytesCol:      ([]byte)("bytes value 3"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry3)
 
 	getIDEntry4 := &getIDEntryWithOnCreate{
 		StringCol: "value 4",
+		BytesCol:  ([]byte)("bytes value 4"),
 	}
 	err = orm.Create(context.Background(), getIDEntry4)
 	assert.Nil(t, err)
 	assert.Equal(t, &getIDEntryWithOnCreate{
 		ID:            sequenceStart + 4,
 		StringCol:     "value 4",
+		BytesCol:      ([]byte)("bytes value 4"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getIDEntry4)
 
 	getIDEntry5 := &getIDEntryWithOnUpdate{
 		StringCol: "value 5",
+		BytesCol:  ([]byte)("bytes value 5"),
 	}
 	err = orm.Create(context.Background(), getIDEntry5)
 	assert.Nil(t, err)
 	assert.Equal(t, &getIDEntryWithOnUpdate{
 		ID:            sequenceStart + 5,
 		StringCol:     "value 5",
+		BytesCol:      ([]byte)("bytes value 5"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry5)
@@ -83,6 +93,7 @@ func testCreate(t *testing.T, orm ORM, sequenceStart int64) {
 		ID1:       1,
 		ID2:       2,
 		StringCol: "value 1",
+		BytesCol:  ([]byte)("bytes value 1"),
 	}
 	err = orm.Create(context.Background(), getUniqueEntry1)
 	assert.Nil(t, err)
@@ -90,6 +101,7 @@ func testCreate(t *testing.T, orm ORM, sequenceStart int64) {
 		ID1:           1,
 		ID2:           2,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getUniqueEntry1)
@@ -114,6 +126,7 @@ func testGet(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getIDEntry1)
@@ -129,6 +142,7 @@ func testGet(t *testing.T, orm ORM) {
 		ID1:           1,
 		ID2:           2,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getUniqueEntry1)
@@ -184,6 +198,7 @@ func testGetWithXLock(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: int64(updateCount),
 	}, finalGetIDEntry1)
@@ -235,6 +250,7 @@ func testGetWithXLock(t *testing.T, orm ORM) {
 		ID1:           1,
 		ID2:           2,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: int64(updateCount),
 	}, finalGetUniqueEntry1)
@@ -270,11 +286,11 @@ func testQuery(t *testing.T, orm ORM) {
 				Expression: goqu.Ex{},
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: 0},
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: 0},
 			},
 			MatchOrder: false,
 		},
@@ -286,9 +302,9 @@ func testQuery(t *testing.T, orm ORM) {
 				),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: 0},
 			},
 			MatchOrder: false,
 		},
@@ -300,8 +316,8 @@ func testQuery(t *testing.T, orm ORM) {
 				),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: 0},
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: 0},
 			},
 			MatchOrder: false,
 		},
@@ -315,11 +331,11 @@ func testQuery(t *testing.T, orm ORM) {
 				},
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: 0},
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: 0},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: 0},
 			},
 			MatchOrder: true,
 		},
@@ -334,8 +350,8 @@ func testQuery(t *testing.T, orm ORM) {
 				Offset: proto.Uint32(3),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: 0},
 			},
 			MatchOrder: true,
 		},
@@ -350,9 +366,9 @@ func testQuery(t *testing.T, orm ORM) {
 				Limit: proto.Uint32(3),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: 0},
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: 0},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: 0},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: 0},
 			},
 			MatchOrder: true,
 		},
@@ -368,7 +384,7 @@ func testQuery(t *testing.T, orm ORM) {
 				Limit:  proto.Uint32(1),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: 0},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: 0},
 			},
 			MatchOrder: true,
 		},
@@ -403,11 +419,11 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				Expression: goqu.Ex{},
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: updateCount},
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount},
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: updateCount},
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: updateCount},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: updateCount},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: updateCount},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: updateCount},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: updateCount},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: updateCount},
 			},
 			MatchOrder: false,
 		},
@@ -419,9 +435,9 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: updateCount * 2},
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount * 2},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount * 2},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: updateCount * 2},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: updateCount * 2},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: updateCount * 2},
 			},
 			MatchOrder: false,
 		},
@@ -433,8 +449,8 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: updateCount * 2},
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: updateCount * 2},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: updateCount * 2},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: updateCount * 2},
 			},
 			MatchOrder: false,
 		},
@@ -448,11 +464,11 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				},
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: updateCount * 3},
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: updateCount * 3},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount * 3},
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount * 3},
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: updateCount * 3},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: updateCount * 3},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: updateCount * 3},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: updateCount * 3},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: updateCount * 3},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: updateCount * 3},
 			},
 			MatchOrder: true,
 		},
@@ -467,8 +483,8 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				Offset: proto.Uint32(3),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount * 4},
-				{ID: 1, StringCol: "value 1", OnCreateCount: 1, OnUpdateCount: updateCount * 4},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: updateCount * 4},
+				{ID: 1, StringCol: "value 1", BytesCol: ([]byte)("bytes value 1"), OnCreateCount: 1, OnUpdateCount: updateCount * 4},
 			},
 			MatchOrder: true,
 		},
@@ -483,9 +499,9 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				Limit: proto.Uint32(3),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 5, StringCol: "value 5", OnCreateCount: 10, OnUpdateCount: updateCount * 4},
-				{ID: 4, StringCol: "value 4", OnCreateCount: 10, OnUpdateCount: updateCount * 4},
-				{ID: 3, StringCol: "value 3", OnCreateCount: 1, OnUpdateCount: updateCount * 4},
+				{ID: 5, StringCol: "value 5", BytesCol: ([]byte)("bytes value 5"), OnCreateCount: 10, OnUpdateCount: updateCount * 4},
+				{ID: 4, StringCol: "value 4", BytesCol: ([]byte)("bytes value 4"), OnCreateCount: 10, OnUpdateCount: updateCount * 4},
+				{ID: 3, StringCol: "value 3", BytesCol: ([]byte)("bytes value 3"), OnCreateCount: 1, OnUpdateCount: updateCount * 4},
 			},
 			MatchOrder: true,
 		},
@@ -501,7 +517,7 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 				Limit:  proto.Uint32(1),
 			},
 			ExpectedEntryList: []getIDEntryWithOnCreateAndOnUpdate{
-				{ID: 2, StringCol: "value 2", OnCreateCount: 1, OnUpdateCount: updateCount * 5},
+				{ID: 2, StringCol: "value 2", BytesCol: ([]byte)("bytes value 2"), OnCreateCount: 1, OnUpdateCount: updateCount * 5},
 			},
 			MatchOrder: true,
 		},
@@ -521,7 +537,8 @@ func testQueryWithXLock(t *testing.T, orm ORM) {
 						return err
 					}
 
-					for _, entry := range entryList {
+					for i := range entryList {
+						entry := entryList[i]
 						if err := o.Update(context.Background(), &entry); err != nil {
 							return err
 						}
@@ -592,6 +609,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry1 := &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            100,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -600,6 +618,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            100,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 0,
 		OnUpdateCount: 1,
 	}, getIDEntry1)
@@ -607,6 +626,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry2 := &getIDEntry{
 		ID:            100,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -615,6 +635,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	assert.Equal(t, &getIDEntry{
 		ID:            100,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry2)
@@ -622,6 +643,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry3 := &getIDEntryWithOnCreate{
 		ID:            100,
 		StringCol:     "value 3",
+		BytesCol:      ([]byte)("bytes value 3"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -630,6 +652,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	assert.Equal(t, &getIDEntryWithOnCreate{
 		ID:            100,
 		StringCol:     "value 3",
+		BytesCol:      ([]byte)("bytes value 3"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry3)
@@ -637,6 +660,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry4 := &getIDEntryWithOnUpdate{
 		ID:            100,
 		StringCol:     "value 4",
+		BytesCol:      ([]byte)("bytes value 4"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -645,6 +669,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	assert.Equal(t, &getIDEntryWithOnUpdate{
 		ID:            100,
 		StringCol:     "value 4",
+		BytesCol:      ([]byte)("bytes value 4"),
 		OnCreateCount: 0,
 		OnUpdateCount: 1,
 	}, getIDEntry4)
@@ -652,6 +677,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry5 := &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            2,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -660,6 +686,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            sequenceStart + 1,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getIDEntry5)
@@ -667,6 +694,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry6 := &getIDEntry{
 		ID:            3,
 		StringCol:     "value 3",
+		BytesCol:      ([]byte)("bytes value 3"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -675,6 +703,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	assert.Equal(t, &getIDEntry{
 		ID:            sequenceStart + 2,
 		StringCol:     "value 3",
+		BytesCol:      ([]byte)("bytes value 3"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry6)
@@ -682,6 +711,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry7 := &getIDEntryWithOnCreate{
 		ID:            4,
 		StringCol:     "value 4",
+		BytesCol:      ([]byte)("bytes value 4"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -690,6 +720,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	assert.Equal(t, &getIDEntryWithOnCreate{
 		ID:            sequenceStart + 3,
 		StringCol:     "value 4",
+		BytesCol:      ([]byte)("bytes value 4"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getIDEntry7)
@@ -697,12 +728,14 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 	getIDEntry8 := &getIDEntryWithOnUpdate{
 		ID:        5,
 		StringCol: "value 5",
+		BytesCol:  ([]byte)("bytes value 5"),
 	}
 	err = orm.CreateOrUpdate(context.Background(), getIDEntry8)
 	assert.Nil(t, err)
 	assert.Equal(t, &getIDEntryWithOnUpdate{
 		ID:            sequenceStart + 4,
 		StringCol:     "value 5",
+		BytesCol:      ([]byte)("bytes value 5"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry8)
@@ -711,6 +744,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 		ID1:       1,
 		ID2:       2,
 		StringCol: "value 1",
+		BytesCol:  ([]byte)("bytes value 1"),
 	}
 	err = orm.CreateOrUpdate(context.Background(), getUniqueEntry1)
 	assert.Nil(t, err)
@@ -718,6 +752,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 		ID1:           1,
 		ID2:           2,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 0,
 		OnUpdateCount: 1,
 	}, getUniqueEntry1)
@@ -726,6 +761,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 		ID1:       2,
 		ID2:       2,
 		StringCol: "value 2",
+		BytesCol:  ([]byte)("bytes value 2"),
 	}
 	err = orm.CreateOrUpdate(context.Background(), getUniqueEntry2)
 	assert.Nil(t, err)
@@ -733,6 +769,7 @@ func testCreateOrUpdate(t *testing.T, orm ORM, sequenceStart int64) {
 		ID1:           2,
 		ID2:           2,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, getUniqueEntry2)
@@ -751,6 +788,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	getIDEntry1 := &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -759,6 +797,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 0,
 		OnUpdateCount: 1,
 	}, getIDEntry1)
@@ -766,6 +805,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	getIDEntry2 := &getIDEntry{
 		ID:            1,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -774,6 +814,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntry{
 		ID:            1,
 		StringCol:     "value 2",
+		BytesCol:      ([]byte)("bytes value 2"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry2)
@@ -781,6 +822,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	getIDEntry3 := &getIDEntryWithOnCreate{
 		ID:            1,
 		StringCol:     "value 3",
+		BytesCol:      ([]byte)("bytes value 3"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -789,6 +831,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntryWithOnCreate{
 		ID:            1,
 		StringCol:     "value 3",
+		BytesCol:      ([]byte)("bytes value 3"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}, getIDEntry3)
@@ -796,6 +839,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	getIDEntry4 := &getIDEntryWithOnUpdate{
 		ID:            1,
 		StringCol:     "value 4",
+		BytesCol:      ([]byte)("bytes value 4"),
 		OnCreateCount: 0,
 		OnUpdateCount: 0,
 	}
@@ -804,6 +848,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntryWithOnUpdate{
 		ID:            1,
 		StringCol:     "value 4",
+		BytesCol:      ([]byte)("bytes value 4"),
 		OnCreateCount: 0,
 		OnUpdateCount: 1,
 	}, getIDEntry4)
@@ -811,6 +856,7 @@ func testUpdate(t *testing.T, orm ORM) {
 	getIDEntry5 := &getIDEntryWithOnCreateAndOnUpdate{
 		ID:        2,
 		StringCol: "value 2",
+		BytesCol:  ([]byte)("bytes value 2"),
 	}
 	err = orm.Update(context.Background(), getIDEntry5)
 	assert.ErrorIs(t, err, ErrUpdateNotApplied)
@@ -819,12 +865,14 @@ func testUpdate(t *testing.T, orm ORM) {
 		ID1:       1,
 		ID2:       2,
 		StringCol: "value 1",
+		BytesCol:  ([]byte)("bytes value 1"),
 	}
 	err = orm.Update(context.Background(), getUniqueEntry1)
 	assert.Nil(t, err)
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 0,
 		OnUpdateCount: 1,
 	}, getIDEntry1)
@@ -833,6 +881,7 @@ func testUpdate(t *testing.T, orm ORM) {
 		ID1:       2,
 		ID2:       2,
 		StringCol: "value 2",
+		BytesCol:  ([]byte)("bytes value 2"),
 	}
 	err = orm.Update(context.Background(), getUniqueEntry2)
 	assert.ErrorIs(t, err, ErrUpdateNotApplied)
@@ -890,6 +939,7 @@ func testWithTX(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, entry)
@@ -918,6 +968,7 @@ func testWithTX(t *testing.T, orm ORM) {
 	assert.Equal(t, &getIDEntryWithOnCreateAndOnUpdate{
 		ID:            1,
 		StringCol:     "value 1",
+		BytesCol:      ([]byte)("bytes value 1"),
 		OnCreateCount: 1,
 		OnUpdateCount: 0,
 	}, entry)

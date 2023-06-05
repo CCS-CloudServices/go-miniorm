@@ -19,7 +19,7 @@ var (
 )
 
 func preparePostgresTestEntryTable(fixtureFile string) error {
-	db, err := newSQLXDatabase(postgresTestConfig)
+	db, err := newSQLDatabase(postgresTestConfig)
 	if err != nil {
 		return err
 	}
@@ -31,6 +31,7 @@ func preparePostgresTestEntryTable(fixtureFile string) error {
 		CREATE TABLE get_id_entries (
 			id BIGSERIAL PRIMARY KEY,
 			string_col TEXT NOT NULL,
+			bytes_col BYTEA NOT NULL,
 			on_create_count BIGINT NOT NULL,
 			on_update_count BIGINT NOT NULL
 		);
@@ -41,6 +42,7 @@ func preparePostgresTestEntryTable(fixtureFile string) error {
 			id_1 BIGINT,
 			id_2 BIGINT,
 			string_col TEXT NOT NULL,
+			bytes_col BYTEA NOT NULL,
 			on_create_count BIGINT NOT NULL,
 			on_update_count BIGINT NOT NULL,
 			PRIMARY KEY (id_1, id_2)
@@ -52,7 +54,7 @@ func preparePostgresTestEntryTable(fixtureFile string) error {
 	}
 
 	fixtures, err := testfixtures.New(
-		testfixtures.Database(db.DB),
+		testfixtures.Database(db),
 		testfixtures.Dialect(string(DriverTypePostgres)),
 		testfixtures.FilesMultiTables(fixtureFile),
 	)

@@ -17,6 +17,7 @@ const (
 type getIDEntry struct {
 	ID            int64  `db:"id" goqu:"skipinsert,skipupdate"`
 	StringCol     string `db:"string_col"`
+	BytesCol      []byte `db:"bytes_col"`
 	OnCreateCount int64  `db:"on_create_count" goqu:"skipupdate"`
 	OnUpdateCount int64  `db:"on_update_count"`
 }
@@ -36,6 +37,7 @@ func (entry *getIDEntry) SetID(id int64) {
 type getIDEntryWithOnCreate struct {
 	ID            int64  `db:"id" goqu:"skipinsert,skipupdate"`
 	StringCol     string `db:"string_col"`
+	BytesCol      []byte `db:"bytes_col"`
 	OnCreateCount int64  `db:"on_create_count" goqu:"skipupdate"`
 	OnUpdateCount int64  `db:"on_update_count"`
 }
@@ -59,6 +61,7 @@ func (entry *getIDEntryWithOnCreate) OnCreate() {
 type getIDEntryWithOnUpdate struct {
 	ID            int64  `db:"id" goqu:"skipinsert,skipupdate"`
 	StringCol     string `db:"string_col"`
+	BytesCol      []byte `db:"bytes_col"`
 	OnCreateCount int64  `db:"on_create_count" goqu:"skipupdate"`
 	OnUpdateCount int64  `db:"on_update_count"`
 }
@@ -82,6 +85,7 @@ func (entry *getIDEntryWithOnUpdate) OnUpdate() {
 type getIDEntryWithOnCreateAndOnUpdate struct {
 	ID            int64  `db:"id" goqu:"skipinsert,skipupdate"`
 	StringCol     string `db:"string_col"`
+	BytesCol      []byte `db:"bytes_col"`
 	OnCreateCount int64  `db:"on_create_count" goqu:"skipupdate"`
 	OnUpdateCount int64  `db:"on_update_count"`
 }
@@ -110,6 +114,7 @@ type getUniqueEntryWithOnCreateAndOnUpdate struct {
 	ID1           int64  `db:"id_1" goqu:"skipupdate"`
 	ID2           int64  `db:"id_2" goqu:"skipupdate"`
 	StringCol     string `db:"string_col"`
+	BytesCol      []byte `db:"bytes_col"`
 	OnCreateCount int64  `db:"on_create_count" goqu:"skipupdate"`
 	OnUpdateCount int64  `db:"on_update_count"`
 }

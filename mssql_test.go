@@ -19,7 +19,7 @@ var (
 )
 
 func prepareMSSQLTestEntryTable(fixtureFile string) error {
-	db, err := newSQLXDatabase(mssqlTestConfig)
+	db, err := newSQLDatabase(mssqlTestConfig)
 	if err != nil {
 		return err
 	}
@@ -32,6 +32,7 @@ func prepareMSSQLTestEntryTable(fixtureFile string) error {
 		CREATE TABLE get_id_entries (
 			id BIGINT IDENTITY(1,1) PRIMARY KEY,
 			string_col NVARCHAR(MAX) NOT NULL,
+			bytes_col VARBINARY(MAX) NOT NULL,
 			on_create_count BIGINT NOT NULL,
 			on_update_count BIGINT NOT NULL
 		);
@@ -42,6 +43,7 @@ func prepareMSSQLTestEntryTable(fixtureFile string) error {
 			id_1 BIGINT,
 			id_2 BIGINT,
 			string_col NVARCHAR(MAX) NOT NULL,
+			bytes_col VARBINARY(1024) NOT NULL,
 			on_create_count BIGINT NOT NULL,
 			on_update_count BIGINT NOT NULL,
 			CONSTRAINT PK_get_unique_entries PRIMARY KEY (id_1, id_2)
@@ -53,7 +55,7 @@ func prepareMSSQLTestEntryTable(fixtureFile string) error {
 	}
 
 	fixtures, err := testfixtures.New(
-		testfixtures.Database(db.DB),
+		testfixtures.Database(db),
 		testfixtures.Dialect(string(DriverTypeMSSQL)),
 		testfixtures.FilesMultiTables(fixtureFile),
 		testfixtures.DangerousSkipTestDatabaseCheck(),

@@ -1,6 +1,7 @@
 package miniorm
 
 import (
+	"database/sql"
 	"time"
 
 	_ "github.com/denisenkom/go-mssqldb" // For MSSQL driver
@@ -10,12 +11,11 @@ import (
 	_ "github.com/doug-martin/goqu/v9/dialect/sqlite3"   // For SQLite driver
 	_ "github.com/doug-martin/goqu/v9/dialect/sqlserver" // For MSSQL driver
 	_ "github.com/go-sql-driver/mysql"                   // For Mysql driver
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"           // For Postgres driver
-	_ "github.com/mattn/go-sqlite3" // For SQLite driver
+	_ "github.com/lib/pq"                                // For Postgres driver
+	_ "github.com/mattn/go-sqlite3"                      // For SQLite driver
 )
 
-func newSQLXDatabase(databaseConfig DatabaseConfig) (*sqlx.DB, error) {
+func newSQLDatabase(databaseConfig DatabaseConfig) (*sql.DB, error) {
 	sourceNameProvider, err := newSourceNameProvider(databaseConfig.Driver)
 	if err != nil {
 		return nil, err
@@ -26,23 +26,23 @@ func newSQLXDatabase(databaseConfig DatabaseConfig) (*sqlx.DB, error) {
 		return nil, err
 	}
 
-	sqlxDatabase, err := sqlx.Connect(string(databaseConfig.Driver), sourceName)
+	db, err := sql.Open(string(databaseConfig.Driver), sourceName)
 	if err != nil {
 		return nil, err
 	}
 
-	sqlxDatabase.SetMaxOpenConns(databaseConfig.MaxOpenConnections)
-	sqlxDatabase.SetMaxIdleConns(databaseConfig.MaxIdleConnections)
-	sqlxDatabase.SetConnMaxIdleTime(time.Duration(databaseConfig.ConnMaxLifetimeInMinutes) * time.Minute)
+	db.SetMaxOpenConns(databaseConfig.MaxOpenConnections)
+	db.SetMaxIdleConns(databaseConfig.MaxIdleConnections)
+	db.SetConnMaxIdleTime(time.Duration(databaseConfig.ConnMaxLifetimeInMinutes) * time.Minute)
 
-	return sqlxDatabase, nil
+	return db, nil
 }
 
 func newGoquDatabase(databaseConfig DatabaseConfig) (*goqu.Database, error) {
-	sqlxDatabase, err := newSQLXDatabase(databaseConfig)
+	db, err := newSQLDatabase(databaseConfig)
 	if err != nil {
 		return nil, err
 	}
 
-	return goqu.New(string(databaseConfig.Driver), sqlxDatabase), nil
+	return goqu.New(string(databaseConfig.Driver), db), nil
 }

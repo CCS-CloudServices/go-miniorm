@@ -19,7 +19,7 @@ var (
 )
 
 func prepareMySQLTestEntryTable(fixtureFile string) error {
-	db, err := newSQLXDatabase(mysqlTestConfig)
+	db, err := newSQLDatabase(mysqlTestConfig)
 	if err != nil {
 		return err
 	}
@@ -28,6 +28,7 @@ func prepareMySQLTestEntryTable(fixtureFile string) error {
 		CREATE TABLE IF NOT EXISTS get_id_entries (
 			id BIGINT NOT NULL AUTO_INCREMENT,
 			string_col TEXT NOT NULL,
+			bytes_col LONGBLOB NOT NULL,
 			on_create_count BIGINT NOT NULL,
 			on_update_count BIGINT NOT NULL,
 			PRIMARY KEY (id)
@@ -41,6 +42,7 @@ func prepareMySQLTestEntryTable(fixtureFile string) error {
 			id_1 BIGINT,
 			id_2 BIGINT,
 			string_col TEXT NOT NULL,
+			bytes_col LONGBLOB NOT NULL,
 			on_create_count BIGINT NOT NULL,
 			on_update_count BIGINT NOT NULL,
 			PRIMARY KEY (id_1, id_2)
@@ -50,7 +52,7 @@ func prepareMySQLTestEntryTable(fixtureFile string) error {
 	}
 
 	fixtures, err := testfixtures.New(
-		testfixtures.Database(db.DB),
+		testfixtures.Database(db),
 		testfixtures.Dialect(string(DriverTypeMySQL)),
 		testfixtures.FilesMultiTables(fixtureFile),
 	)

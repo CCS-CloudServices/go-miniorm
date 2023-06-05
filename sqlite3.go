@@ -50,6 +50,7 @@ func (orm *SQLite3ORM) Create(ctx context.Context, entry interface{}) error {
 
 	result, err := orm.GetDBWrapper().
 		Insert(entryTableName).
+		Prepared(true).
 		Rows(entry).
 		Executor().
 		ExecContext(ctx)
@@ -230,6 +231,7 @@ func (orm *SQLite3ORM) Update(ctx context.Context, entry interface{}) error {
 
 	result, err := orm.GetDBWrapper().
 		Update(entryTableName).
+		Prepared(true).
 		Where(selectEntryUniqueExpression).
 		Set(entry).
 		Executor().

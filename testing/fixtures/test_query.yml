@@ -1,21 +1,26 @@
 get_id_entries:
   - id: 1
     string_col: "value 1"
+    bytes_col: 0x62797465732076616c75652031
     on_create_count: 1
     on_update_count: 0
   - id: 2
     string_col: "value 2"
+    bytes_col: 0x62797465732076616c75652032
     on_create_count: 1
     on_update_count: 0
   - id: 3
     string_col: "value 3"
+    bytes_col: 0x62797465732076616c75652033
     on_create_count: 1
     on_update_count: 0
   - id: 4
     string_col: "value 4"
+    bytes_col: 0x62797465732076616c75652034
     on_create_count: 10
     on_update_count: 0
   - id: 5
     string_col: "value 5"
+    bytes_col: 0x62797465732076616c75652035
     on_create_count: 10
     on_update_count: 0

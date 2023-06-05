@@ -3,7 +3,7 @@ package miniorm
 
 import (
 	"context"
-	"errors"
+	"fmt"
 	"regexp"
 
 	"github.com/doug-martin/goqu/v9"
@@ -12,9 +12,10 @@ import (
 )
 
 type MSSQLORM struct {
-	db                DBWrapper
-	entryInfoProvider *entryInfoProvider
-	fromTableRegex    *regexp.Regexp
+	db                   DBWrapper
+	entryInfoProvider    *entryInfoProvider
+	insertIntoTableRegex *regexp.Regexp
+	fromTableRegex       *regexp.Regexp
 }
 
 func NewMSSQLORM(databaseConfig DatabaseConfig) (ORM, error) {
@@ -24,10 +25,23 @@ func NewMSSQLORM(databaseConfig DatabaseConfig) (ORM, error) {
 	}
 
 	return &MSSQLORM{
-		db:                goquDB,
-		entryInfoProvider: newEntryInfoProvider(),
-		fromTableRegex:    regexp.MustCompile(`FROM\s+"[^"]+"`),
+		db:                   goquDB,
+		entryInfoProvider:    newEntryInfoProvider(),
+		insertIntoTableRegex: regexp.MustCompile(`INSERT INTO "[^"]+"\s*\(("[^"]+",\s*)*("[^"]+")\)`),
+		fromTableRegex:       regexp.MustCompile(`FROM\s+"[^"]+"`),
 	}, nil
+}
+
+// HACK: Since goqu does not support MSSQL's OUTPUT syntax, we have to manually add that
+func (orm *MSSQLORM) wrapInsertSQLStatementWithOutputIDColumn(statement, idColumn string) string {
+	insertIntoTablePosition := orm.insertIntoTableRegex.FindStringIndex(statement)
+	if insertIntoTablePosition == nil {
+		return statement
+	}
+
+	return statement[:insertIntoTablePosition[1]] +
+		fmt.Sprintf(" OUTPUT INSERTED.%s", idColumn) +
+		statement[insertIntoTablePosition[1]:]
 }
 
 func (orm *MSSQLORM) Create(ctx context.Context, entry interface{}) error {
@@ -35,45 +49,57 @@ func (orm *MSSQLORM) Create(ctx context.Context, entry interface{}) error {
 		return ErrNilEntry
 	}
 
-	return orm.WithTx(func(txORM ORM) error {
-		orm.entryInfoProvider.OnCreateIfEntryIsOnCreator(entry)
+	orm.entryInfoProvider.OnCreateIfEntryIsOnCreator(entry)
 
-		entryTableName, err := orm.entryInfoProvider.GetEntryTableName(entry)
+	entryTableName, err := orm.entryInfoProvider.GetEntryTableName(entry)
+	if err != nil {
+		return err
+	}
+
+	sqlStatement, params, err := orm.GetDBWrapper().
+		Insert(entryTableName).
+		Prepared(true).
+		Rows(entry).
+		ToSQL()
+	if err != nil {
+		return err
+	}
+
+	var (
+		idColumn string
+		idValue  int64
+	)
+
+	idSetterEntry, isIDSetterEntry := entry.(IDSetter)
+	if isIDSetterEntry {
+		idColumn, _, err = orm.entryInfoProvider.GetID(entry)
 		if err != nil {
 			return err
 		}
 
-		if _, err := txORM.GetDBWrapper().
-			Insert(entryTableName).
-			Rows(entry).
-			Executor().
-			Exec(); err != nil {
+		sqlStatement = orm.wrapInsertSQLStatementWithOutputIDColumn(sqlStatement, idColumn)
+	}
+
+	rows, err := orm.GetDBWrapper().QueryContext(ctx, sqlStatement, params...)
+	if err != nil {
+		return err
+	}
+
+	defer rows.Close()
+
+	if isIDSetterEntry {
+		if !rows.Next() {
+			return ErrNotFound
+		}
+
+		if err := rows.Scan(&idValue); err != nil {
 			return err
 		}
 
-		if idSetterEntry, ok := entry.(IDSetter); ok {
-			rows, err := txORM.GetDBWrapper().
-				Select(goqu.L("SCOPE_IDENTITY()")).
-				Executor().
-				QueryContext(ctx)
-			if err != nil {
-				return err
-			}
+		idSetterEntry.SetID(idValue)
+	}
 
-			if !rows.Next() {
-				return errors.New("failed to get the id of newly inserted entry")
-			}
-
-			var entryID int64
-			if err := rows.Scan(&entryID); err != nil {
-				return err
-			}
-
-			idSetterEntry.SetID(entryID)
-		}
-
-		return nil
-	})
+	return nil
 }
 
 // HACK: Since goqu does not support MSSQL's lock syntax, we have to manually add that
@@ -118,7 +144,12 @@ func (orm *MSSQLORM) CreateOrUpdate(ctx context.Context, entry interface{}) erro
 
 		defer rows.Close()
 
-		if !rows.Next() {
+		rowExists := rows.Next()
+		if err := rows.Close(); err != nil {
+			return err
+		}
+
+		if !rowExists {
 			return txORM.Create(ctx, entry)
 		}
 
@@ -297,6 +328,7 @@ func (orm *MSSQLORM) Update(ctx context.Context, entry interface{}) error {
 
 	result, err := orm.db.
 		Update(entryTableName).
+		Prepared(true).
 		Where(selectEntryUniqueExpression).
 		Set(entry).
 		Executor().
@@ -325,9 +357,10 @@ func (orm *MSSQLORM) WithTx(executeFunc func(ORM) error) error {
 	if nonTXDB, ok := orm.db.(*goqu.Database); ok {
 		return nonTXDB.WithTx(func(td *goqu.TxDatabase) error {
 			return executeFunc(&MSSQLORM{
-				db:                td,
-				entryInfoProvider: orm.entryInfoProvider,
-				fromTableRegex:    orm.fromTableRegex,
+				db:                   td,
+				entryInfoProvider:    orm.entryInfoProvider,
+				insertIntoTableRegex: orm.insertIntoTableRegex,
+				fromTableRegex:       orm.fromTableRegex,
 			})
 		})
 	}
