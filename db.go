@@ -11,8 +11,17 @@ import (
 	_ "github.com/doug-martin/goqu/v9/dialect/sqlite3"   // For SQLite driver
 	_ "github.com/doug-martin/goqu/v9/dialect/sqlserver" // For MSSQL driver
 	_ "github.com/go-sql-driver/mysql"                   // For Mysql driver
-	_ "github.com/lib/pq"                                // For Postgres driver
+	_ "github.com/jackc/pgx/v4/stdlib"                   // For Postgres driver
 	_ "github.com/mattn/go-sqlite3"                      // For SQLite driver
+)
+
+var (
+	driverConfigNameToDriverName = map[DriverType]string{
+		DriverTypeMSSQL:    "sqlserver",
+		DriverTypeMySQL:    "mysql",
+		DriverTypePostgres: "pgx",
+		DriverTypeSQLite3:  "sqlite3",
+	}
 )
 
 func newSQLDatabase(databaseConfig DatabaseConfig) (*sql.DB, error) {
@@ -26,7 +35,7 @@ func newSQLDatabase(databaseConfig DatabaseConfig) (*sql.DB, error) {
 		return nil, err
 	}
 
-	db, err := sql.Open(string(databaseConfig.Driver), sourceName)
+	db, err := sql.Open(driverConfigNameToDriverName[databaseConfig.Driver], sourceName)
 	if err != nil {
 		return nil, err
 	}
@@ -44,5 +53,5 @@ func newGoquDatabase(databaseConfig DatabaseConfig) (*goqu.Database, error) {
 		return nil, err
 	}
 
-	return goqu.New(string(databaseConfig.Driver), db), nil
+	return goqu.New(driverConfigNameToDriverName[databaseConfig.Driver], db), nil
 }
