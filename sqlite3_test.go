@@ -1,6 +1,7 @@
 package miniorm
 
 import (
+	"log"
 	"testing"
 
 	"github.com/go-testfixtures/testfixtures/v3"
@@ -15,12 +16,14 @@ var (
 		SQLite3TransactionMaxRetry: 100,
 		SQLite3TransactionRetryDelayInMillisecond:  100,
 		SQLite3TransactionRetryJitterInMillisecond: 20,
+		Logger: log.Default(),
 	}
 
 	sqlite3TestConfigMutex = DatabaseConfig{
 		Driver:                 DriverTypeSQLite3,
 		URL:                    "file:test.db",
 		SQLite3TransactionMode: SQLite3TransactionModeMutex,
+		Logger:                 log.Default(),
 	}
 )
 

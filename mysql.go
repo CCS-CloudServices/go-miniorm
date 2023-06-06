@@ -20,6 +20,8 @@ func NewMySQLORM(databaseConfig DatabaseConfig) (ORM, error) {
 		return nil, err
 	}
 
+	goquDB.Logger(databaseConfig.Logger)
+
 	return &MySQLORM{
 		db:                goquDB,
 		entryInfoProvider: newEntryInfoProvider(),

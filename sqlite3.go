@@ -29,6 +29,8 @@ func NewSQLite3ORM(databaseConfig DatabaseConfig) (ORM, error) {
 		return nil, err
 	}
 
+	goquDB.Logger(databaseConfig.Logger)
+
 	return &SQLite3ORM{
 		db:                goquDB,
 		entryInfoProvider: newEntryInfoProvider(),

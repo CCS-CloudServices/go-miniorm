@@ -1,6 +1,7 @@
 package miniorm
 
 import (
+	"log"
 	"testing"
 
 	"github.com/go-testfixtures/testfixtures/v3"
@@ -15,6 +16,7 @@ var (
 		DatabaseName: "test",
 		User:         "root",
 		Password:     "password",
+		Logger:       log.Default(),
 	}
 )
 

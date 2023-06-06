@@ -24,6 +24,8 @@ func NewMSSQLORM(databaseConfig DatabaseConfig) (ORM, error) {
 		return nil, err
 	}
 
+	goquDB.Logger(databaseConfig.Logger)
+
 	return &MSSQLORM{
 		db:                   goquDB,
 		entryInfoProvider:    newEntryInfoProvider(),
