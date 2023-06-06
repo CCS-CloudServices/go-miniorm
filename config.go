@@ -11,7 +11,7 @@ const (
 	DriverTypeMySQL    DriverType = "mysql"
 	DriverTypePostgres DriverType = "postgres"
 	DriverTypeSQLite3  DriverType = "sqlite3"
-	DriverTypeMSSQL    DriverType = "sqlserver"
+	DriverTypeMSSQL    DriverType = "mssql"
 
 	SQLite3TransactionModeRetry SQLite3TransactionMode = "retry"
 	SQLite3TransactionModeMutex SQLite3TransactionMode = "mutex"

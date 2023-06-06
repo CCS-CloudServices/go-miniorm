@@ -39,7 +39,7 @@ func (orm *PostgresORM) Create(ctx context.Context, entry interface{}) error {
 		return err
 	}
 
-	insertDataset := orm.GetDBWrapper().Insert(entryTableName).Rows(entry)
+	insertDataset := orm.GetDBWrapper().Insert(entryTableName).Prepared(true).Rows(entry)
 
 	var (
 		idColumn string
@@ -271,6 +271,7 @@ func (orm *PostgresORM) Update(ctx context.Context, entry interface{}) error {
 
 	result, err := orm.db.
 		Update(entryTableName).
+		Prepared(true).
 		Where(selectEntryUniqueExpression).
 		Set(entry).
 		Executor().

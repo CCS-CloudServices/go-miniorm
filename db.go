@@ -16,10 +16,17 @@ import (
 )
 
 var (
-	driverConfigNameToDriverName = map[DriverType]string{
+	configDriverTypeToDriverName = map[DriverType]string{
 		DriverTypeMSSQL:    "sqlserver",
 		DriverTypeMySQL:    "mysql",
 		DriverTypePostgres: "pgx",
+		DriverTypeSQLite3:  "sqlite3",
+	}
+
+	configDriverTypeToDialect = map[DriverType]string{
+		DriverTypeMSSQL:    "sqlserver",
+		DriverTypeMySQL:    "mysql",
+		DriverTypePostgres: "postgres",
 		DriverTypeSQLite3:  "sqlite3",
 	}
 )
@@ -35,7 +42,7 @@ func newSQLDatabase(databaseConfig DatabaseConfig) (*sql.DB, error) {
 		return nil, err
 	}
 
-	db, err := sql.Open(driverConfigNameToDriverName[databaseConfig.Driver], sourceName)
+	db, err := sql.Open(configDriverTypeToDriverName[databaseConfig.Driver], sourceName)
 	if err != nil {
 		return nil, err
 	}
@@ -53,5 +60,5 @@ func newGoquDatabase(databaseConfig DatabaseConfig) (*goqu.Database, error) {
 		return nil, err
 	}
 
-	return goqu.New(driverConfigNameToDriverName[databaseConfig.Driver], db), nil
+	return goqu.New(configDriverTypeToDialect[databaseConfig.Driver], db), nil
 }
