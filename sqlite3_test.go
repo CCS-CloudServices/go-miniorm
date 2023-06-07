@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/go-testfixtures/testfixtures/v3"
+	_ "github.com/mattn/go-sqlite3" // For SQLite driver
 	"github.com/stretchr/testify/assert"
 )
 

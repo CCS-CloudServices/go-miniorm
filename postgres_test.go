@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/go-testfixtures/testfixtures/v3"
+	_ "github.com/jackc/pgx/v4/stdlib" // For Postgres driver
 	"github.com/stretchr/testify/assert"
 )
 

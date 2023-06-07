@@ -4,6 +4,7 @@ import (
 	"log"
 	"testing"
 
+	_ "github.com/go-sql-driver/mysql" // For Mysql driver
 	"github.com/go-testfixtures/testfixtures/v3"
 	"github.com/stretchr/testify/assert"
 )

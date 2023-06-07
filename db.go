@@ -4,15 +4,11 @@ import (
 	"database/sql"
 	"time"
 
-	_ "github.com/denisenkom/go-mssqldb" // For MSSQL driver
 	"github.com/doug-martin/goqu/v9"
-	_ "github.com/doug-martin/goqu/v9/dialect/mysql"     // For Mysql driver
-	_ "github.com/doug-martin/goqu/v9/dialect/postgres"  // For Postgres driver
-	_ "github.com/doug-martin/goqu/v9/dialect/sqlite3"   // For SQLite driver
-	_ "github.com/doug-martin/goqu/v9/dialect/sqlserver" // For MSSQL driver
-	_ "github.com/go-sql-driver/mysql"                   // For Mysql driver
-	_ "github.com/jackc/pgx/v4/stdlib"                   // For Postgres driver
-	_ "github.com/mattn/go-sqlite3"                      // For SQLite driver
+	_ "github.com/doug-martin/goqu/v9/dialect/mysql"     // For Mysql dialect
+	_ "github.com/doug-martin/goqu/v9/dialect/postgres"  // For Postgres dialect
+	_ "github.com/doug-martin/goqu/v9/dialect/sqlite3"   // For SQLite dialect
+	_ "github.com/doug-martin/goqu/v9/dialect/sqlserver" // For MSSQL dialect
 )
 
 var (

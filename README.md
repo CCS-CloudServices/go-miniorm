@@ -206,6 +206,14 @@ Model structs are **not required** to implement this interface.
 ### Initializing the ORM
 
 ```golang
+// Necessary driver packages must be imported separately
+import (
+	_ "github.com/denisenkom/go-mssqldb" // For MSSQL driver
+	_ "github.com/go-sql-driver/mysql"   // For Mysql driver
+	_ "github.com/jackc/pgx/v4/stdlib"   // For Postgres driver
+	_ "github.com/mattn/go-sqlite3"      // For SQLite driver
+)
+
 // For MySQL, Driver, Host, Port, DatabaseName, User and Password are required.
 mysqlConfig := miniorm.DatabaseConfig{
     Driver:       miniorm.DriverTypeMySQL,
@@ -261,22 +269,22 @@ mySQLORM, err := miniorm.NewMySQLORM(mysqlConfig)
 
 #### Configurations
 
-| Field                                        | Type                                                 | Description                                                                                                                                          |
-| -------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Field                                        | Type                                             | Description                                                                                                                                          |
+| -------------------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Driver`                                     | One of `mysql`, `mssql`, `postgres` or `sqlite3` | The database engine to connect to                                                                                                                    |
-| `Host`                                       | string                                               | The host address of the database server (for MySQL, MSSQL and Postgres)                                                                              |
-| `DatabaseName`                               | string                                               | The database name (for MySQL, MSSQL and Postgres)                                                                                                    |
-| `Port`                                       | int                                                  | The port number of the database server (for MySQL, MSSQL and Postgres)                                                                               |
-| `User`                                       | string                                               | The user on the database server (for MySQL, MSSQL and Postgres)                                                                                      |
-| `Password`                                   | string                                               | The password of the user on the database server (for MySQL, MSSQL and Postgres)                                                                      |
-| `URL`                                        | string                                               | The URL to the database file (for SQLite3)                                                                                                           |
-| `MaxOpenConnections`                         | int                                                  | The maximum number of database connections to open in the connection pool                                                                            |
-| `MaxIdleConnections`                         | int                                                  | The maximum number of idle database connections to be left in the connection pool                                                                    |
-| `ConnMaxLifetimeInMinutes`                   | int                                                  | The maximum number of minute a database connection can stay idle before being closed                                                                 |
-| `SQLite3TransactionMode`                     | One of `retry` or `mutex`                            | See <a href="#regarding-sqlite3transactionmode">Regarding `SQLite3TransactionMode`</a>                                                               |
-| `SQLite3TransactionMaxRetry`                 | uint                                                 | If `SQLite3TransactionMode` is `retry`, the maximum number of retries when initiating a database transaction.                                        |
-| `SQLite3TransactionRetryDelayInMillisecond`  | int                                                  | If `SQLite3TransactionMode` is `retry`, the delay (in milliseconds) between retries when initiating a database transaction.                          |
-| `SQLite3TransactionRetryJitterInMillisecond` | int                                                  | If `SQLite3TransactionMode` is `retry`, the maximum random jitter in delay (in milliseconds) between retries when initiating a database transaction. |
+| `Host`                                       | string                                           | The host address of the database server (for MySQL, MSSQL and Postgres)                                                                              |
+| `DatabaseName`                               | string                                           | The database name (for MySQL, MSSQL and Postgres)                                                                                                    |
+| `Port`                                       | int                                              | The port number of the database server (for MySQL, MSSQL and Postgres)                                                                               |
+| `User`                                       | string                                           | The user on the database server (for MySQL, MSSQL and Postgres)                                                                                      |
+| `Password`                                   | string                                           | The password of the user on the database server (for MySQL, MSSQL and Postgres)                                                                      |
+| `URL`                                        | string                                           | The URL to the database file (for SQLite3)                                                                                                           |
+| `MaxOpenConnections`                         | int                                              | The maximum number of database connections to open in the connection pool                                                                            |
+| `MaxIdleConnections`                         | int                                              | The maximum number of idle database connections to be left in the connection pool                                                                    |
+| `ConnMaxLifetimeInMinutes`                   | int                                              | The maximum number of minute a database connection can stay idle before being closed                                                                 |
+| `SQLite3TransactionMode`                     | One of `retry` or `mutex`                        | See <a href="#regarding-sqlite3transactionmode">Regarding `SQLite3TransactionMode`</a>                                                               |
+| `SQLite3TransactionMaxRetry`                 | uint                                             | If `SQLite3TransactionMode` is `retry`, the maximum number of retries when initiating a database transaction.                                        |
+| `SQLite3TransactionRetryDelayInMillisecond`  | int                                              | If `SQLite3TransactionMode` is `retry`, the delay (in milliseconds) between retries when initiating a database transaction.                          |
+| `SQLite3TransactionRetryJitterInMillisecond` | int                                              | If `SQLite3TransactionMode` is `retry`, the maximum random jitter in delay (in milliseconds) between retries when initiating a database transaction. |
 
 #### Regarding `SQLite3TransactionMode`
 

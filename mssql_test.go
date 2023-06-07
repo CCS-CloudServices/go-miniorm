@@ -4,6 +4,7 @@ import (
 	"log"
 	"testing"
 
+	_ "github.com/denisenkom/go-mssqldb" // For MSSQL driver
 	"github.com/go-testfixtures/testfixtures/v3"
 	"github.com/stretchr/testify/assert"
 )
